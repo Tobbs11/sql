@@ -1,0 +1,57 @@
+Table Organization {
+  id INTEGER pk
+  name TEXT
+  email TEXT
+  description TEXT
+  category TEXT
+  logo TEXT
+  employee_size TEXT
+  total_ticket_sales INTEGER
+  total_ticket_revenue REAL
+  date_joined TIMESTAMP
+}
+Table Event {
+  id INTEGER pk
+  organization_id INTEGER
+  name TEXT
+  description TEXT
+  location_coords TEXT
+  maximum_size INTEGER
+  start_date TIMESTAMP
+  end_date TIMESTAMP
+  duration INTEGER
+}
+Table EventTicketType {
+  id INTEGER pk
+  event_id INTEGER
+  name TEXT
+  description TEXT
+  price REAL
+  created_at TIMESTAMP
+}
+Table EventTicket {
+  id INTEGER
+  reference TEXT
+  event_id INTEGER pk
+  event_ticket_type_id INTEGER pk
+  name TEXT
+  email TEXT pk
+  expired BOOLEAN
+  created_at TIMESTAMP
+  expired_at TIMESTAMP
+}
+Table EventCoupon {
+  id INTEGER pk
+  event_id INTEGER
+  coupon_code TEXT
+  coupon_type TEXT
+  coupon_value REAL
+  is_active BOOLEAN
+  event_ticket_type_id INTEGER
+}
+Ref: Event.organization_id > Organization.id
+Ref: EventTicketType.event_id > Event.id
+Ref: EventTicket.event_ticket_type_id > EventTicketType.id
+Ref: EventTicket.event_id > Event.id
+Ref: EventCoupon.event_id > Event.id
+Ref: EventCoupon.event_ticket_type_id > EventTicketType.id
